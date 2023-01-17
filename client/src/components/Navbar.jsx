@@ -1,9 +1,12 @@
 import Badge from '@mui/material/Badge';
 import SearchIcon from '@mui/icons-material/Search';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import React from "react";
 import styled from "styled-components";
 import {mobile} from "../responsive";
+import {useDispatch, useSelector} from "react-redux";
+import {loginFailure, logout} from "../redux/userRedux";
 
 
 const Container = styled.div`
@@ -67,9 +70,14 @@ const MenuItem = styled.div`
   ${mobile({fontSize: "12px", marginLeft: "10px"})}
 `;
 
-const Link =styled.a`
-  text-decoration: none !important;`
+const Link = styled.a`
+  text-decoration: none !important;
+  color: black;
+`
+
 const Navbar = () => {
+    const user = useSelector((state) => state.user.currentUser);
+    const dispatch = useDispatch();
     return (
         <Container>
             <Wrapper>
@@ -83,13 +91,18 @@ const Navbar = () => {
                 <Center>
                     <Logo>Urban.</Logo>
                 </Center>
-                <Right>
-                    <Link href="/register">
-                        <MenuItem>REGISTER</MenuItem>
-                    </Link>
-                    <Link href="/login">
-                        <MenuItem>SIGN IN</MenuItem>
-                    </Link>
+                <Right>{user ?
+                    <LogoutOutlinedIcon
+                        style={{cursor:"pointer"}}onClick={()=>dispatch(logout())}/>
+                    :
+                    <>
+                        <Link href="/register">
+                            <MenuItem>REGISTER</MenuItem>
+                        </Link>
+                        <Link href="/login">
+                            <MenuItem>SIGN IN</MenuItem>
+                        </Link>
+                    </>}
                     <Link href="/cart">
                         <MenuItem>
                             <Badge badgeContent={5} color="primary">
