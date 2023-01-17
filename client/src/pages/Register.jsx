@@ -12,6 +12,8 @@ const Container = styled.div`
   url("https://i.ibb.co/5hR762z/green-monstera-leaves-nature-background.jpg") center;
   background-size: cover;
   display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const Wrapper = styled.div`

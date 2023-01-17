@@ -6,7 +6,7 @@ import React from "react";
 import styled from "styled-components";
 import {mobile} from "../responsive";
 import {useDispatch, useSelector} from "react-redux";
-import {loginFailure, logout} from "../redux/userRedux";
+import {logout} from "../redux/userRedux";
 
 
 const Container = styled.div`
@@ -93,7 +93,7 @@ const Navbar = () => {
                 </Center>
                 <Right>{user ?
                     <LogoutOutlinedIcon
-                        style={{cursor:"pointer"}}onClick={()=>dispatch(logout())}/>
+                        style={{cursor: "pointer"}} onClick={() => dispatch(logout())}/>
                     :
                     <>
                         <Link href="/register">
