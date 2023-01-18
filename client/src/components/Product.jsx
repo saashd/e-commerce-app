@@ -2,6 +2,7 @@ import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import styled from "styled-components";
+import {Link} from "react-router-dom";
 
 const Info = styled.div`
   opacity: 0;
@@ -56,6 +57,7 @@ const Icon = styled.div`
   justify-content: center;
   margin: 10px;
   transition: all 0.5s ease;
+  color: black;
 
   &:hover {
     background-color: #dce3e3;
@@ -68,21 +70,25 @@ const Product = ({item}) => {
         <Container inStock={item.inStock}>
             <Image src={item.img}/>
             <Info>{item.inStock ?
-                <>
+                <> <Link to={`/cart`}>
                     <Icon>
                         <ShoppingCartOutlinedIcon/>
                     </Icon>
-                    <Icon>
-                        <SearchOutlinedIcon/>
-                    </Icon>
+                </Link>
+                    <Link to={`/product/${item._id}`}>
+                        <Icon>
+                            <SearchOutlinedIcon/>
+                        </Icon>
+                    </Link>
+
                     <Icon>
                         <FavoriteBorderOutlinedIcon/>
                     </Icon>
                 </> :
                 <Text>
-                   Item out of stock.
+                    Item out of stock.
                 </Text>
-                    }
+            }
             </Info>
         </Container>
     );

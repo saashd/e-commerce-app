@@ -6,11 +6,12 @@ import RoomIcon from '@mui/icons-material/Room';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import MailOutlinedIcon from '@mui/icons-material/MailOutlined';
 import styled from "styled-components";
-import { mobile } from "../responsive";
+import {mobile} from "../responsive";
+import {Link} from "react-router-dom";
 
 const Container = styled.div`
   display: flex;
-  ${mobile({ flexDirection: "column" })}
+  ${mobile({flexDirection: "column"})}
 `;
 
 const Left = styled.div`
@@ -45,7 +46,7 @@ const SocialIcon = styled.div`
 const Center = styled.div`
   flex: 1;
   padding: 20px;
-  ${mobile({ display: "none" })}
+  ${mobile({display: "none"})}
 `;
 
 const Title = styled.h3`
@@ -58,6 +59,7 @@ const List = styled.ul`
   list-style: none;
   display: flex;
   flex-wrap: wrap;
+
 `;
 
 const ListItem = styled.li`
@@ -68,7 +70,7 @@ const ListItem = styled.li`
 const Right = styled.div`
   flex: 1;
   padding: 20px;
-  ${mobile({ backgroundColor: "#fff8f8" })}
+  ${mobile({backgroundColor: "#fff8f8"})}
 
 `;
 
@@ -79,63 +81,84 @@ const ContactItem = styled.div`
 `;
 
 const Payment = styled.img`
-    width: 50%;
+  width: 50%;
 `;
 
 const Footer = () => {
-  return (
-    <Container>
-      <Left>
-        <Logo>Urban.</Logo>
-        <Desc>
-          There are many variations of passages of Lorem Ipsum available, but
-          the majority have suffered alteration in some form, by injected
-          humour, or randomised words which don’t look even slightly believable.
-        </Desc>
-        <SocialContainer>
-          <SocialIcon color="3B5999">
-            <FacebookIcon />
-          </SocialIcon>
-          <SocialIcon color="E4405F">
-            <InstagramIcon />
-          </SocialIcon>
-          <SocialIcon color="55ACEE">
-            <TwitterIcon />
-          </SocialIcon>
-          <SocialIcon color="E60023">
-            <PinterestIcon />
-          </SocialIcon>
-        </SocialContainer>
-      </Left>
-      <Center>
-        <Title>Useful Links</Title>
-        <List>
-          <ListItem>Home</ListItem>
-          <ListItem>Cart</ListItem>
-          <ListItem>House Plants</ListItem>
-          <ListItem>Pots</ListItem>
-          <ListItem>Accessories</ListItem>
-          {/*<ListItem>My Account</ListItem>*/}
-          {/*<ListItem>Order Tracking</ListItem>*/}
-          {/*<ListItem>Wishlist</ListItem>*/}
-          {/*<ListItem>Terms</ListItem>*/}
-        </List>
-      </Center>
-      <Right>
-        <Title>Contact</Title>
-        <ContactItem>
-          <RoomIcon style={{marginRight:"10px"}}/> 16, Tarad , Ramat Gan 5213603
-        </ContactItem>
-        <ContactItem>
-          <PhoneIcon style={{marginRight:"10px"}}/> +972 55 458 1232
-        </ContactItem>
-        <ContactItem>
-          <MailOutlinedIcon style={{marginRight:"10px"}} /> contact@urban.dev
-        </ContactItem>
-        <Payment src="https://i.ibb.co/Qfvn4z6/payment.png" />
-      </Right>
-    </Container>
-  );
+    return (
+        <Container>
+            <Left>
+                <Logo>Urban.</Logo>
+                <Desc>
+                    There are many variations of passages of Lorem Ipsum available, but
+                    the majority have suffered alteration in some form, by injected
+                    humour, or randomised words which don’t look even slightly believable.
+                </Desc>
+                <SocialContainer>
+                    <SocialIcon color="3B5999">
+                        <FacebookIcon/>
+                    </SocialIcon>
+                    <SocialIcon color="E4405F">
+                        <InstagramIcon/>
+                    </SocialIcon>
+                    <SocialIcon color="55ACEE">
+                        <TwitterIcon/>
+                    </SocialIcon>
+                    <SocialIcon color="E60023">
+                        <PinterestIcon/>
+                    </SocialIcon>
+                </SocialContainer>
+            </Left>
+            <Center>
+                <Title>Useful Links</Title>
+
+                <List>
+                    <ListItem>
+                        <Link to="/">
+                            Home
+                        </Link>
+                    </ListItem>
+                    <ListItem>
+                        <Link to="/cart">Cart
+                        </Link>
+                    </ListItem>
+                    <ListItem>
+                        <Link to="/products/houseplants">
+                            House Plants
+                        </Link>
+                    </ListItem>
+                    <ListItem>
+                        <Link to="/products/pots">
+                            Pots
+                        </Link>
+                    </ListItem>
+                    <ListItem>
+                        <Link to="/products/accessories">
+                            Accessories
+                        </Link>
+                    </ListItem>
+
+                    {/*<ListItem>My Account</ListItem>*/}
+                    {/*<ListItem>Order Tracking</ListItem>*/}
+                    {/*<ListItem>Wishlist</ListItem>*/}
+                    {/*<ListItem>Terms</ListItem>*/}
+                </List>
+            </Center>
+            <Right>
+                <Title>Contact</Title>
+                <ContactItem>
+                    <RoomIcon style={{marginRight: "10px"}}/> 16, Tarad , Ramat Gan 5213603
+                </ContactItem>
+                <ContactItem>
+                    <PhoneIcon style={{marginRight: "10px"}}/> +972 55 458 1232
+                </ContactItem>
+                <ContactItem>
+                    <MailOutlinedIcon style={{marginRight: "10px"}}/> contact@urban.dev
+                </ContactItem>
+                <Payment src="https://i.ibb.co/Qfvn4z6/payment.png"/>
+            </Right>
+        </Container>
+    );
 };
 
 export default Footer;

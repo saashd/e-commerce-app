@@ -45,10 +45,15 @@ const ProductList = () => {
     const [filters, setFilters] = useState({});
     const handleFilters = (e) => {
         const value = e.target.value;
-        setFilters({
-            ...filters,
-            [e.target.name]: value,
-        });
+        if (value === "all") {
+            setFilters({})
+        } else {
+            setFilters({
+                ...filters,
+                [e.target.name]: value,
+            });
+        }
+
     };
 
     return (
@@ -57,19 +62,20 @@ const ProductList = () => {
             <Announcement/>
             <Title>{cat}</Title>
             <FilterContainer>
-                {cat==="pots"&&
+                {cat !== "houseplants" &&
                     <Filter>
-                    <FilterText>Filter Products:</FilterText>
-                    <Select name="colors" onChange={handleFilters}>
-                        <Option disabled>Color</Option>
-                        <Option>white</Option>
-                        <Option>black</Option>
-                        <Option>red</Option>
-                        <Option>blue</Option>
-                        <Option>yellow</Option>
-                        <Option>green</Option>
-                    </Select>
-                </Filter>
+                        <FilterText>Filter Products:</FilterText>
+                        <Select name="colors" onChange={handleFilters}>
+                            <Option disabled>Color</Option>
+                            <Option>all</Option>
+                            <Option>white</Option>
+                            <Option>black</Option>
+                            <Option>red</Option>
+                            <Option>blue</Option>
+                            <Option>yellow</Option>
+                            <Option>green</Option>
+                        </Select>
+                    </Filter>
                 }
 
                 <Filter>
