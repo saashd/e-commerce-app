@@ -27,7 +27,8 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #008080;
+  background-color: #${(props) => props.inStock ? "008080" : "f1f1f1"};
+
   position: relative;
 
   &:hover ${Info} {
@@ -39,6 +40,10 @@ const Container = styled.div`
 const Image = styled.img`
   height: 90%;
   z-index: 2;
+`;
+
+const Text = styled.h1`
+  color: #ffffff;
 `;
 
 const Icon = styled.div`
@@ -53,25 +58,31 @@ const Icon = styled.div`
   transition: all 0.5s ease;
 
   &:hover {
-    background-color: #e9f5f5;
+    background-color: #dce3e3;
     transform: scale(1.1);
   }
 `;
 
 const Product = ({item}) => {
     return (
-        <Container>
+        <Container inStock={item.inStock}>
             <Image src={item.img}/>
-            <Info>
-                <Icon>
-                    <ShoppingCartOutlinedIcon/>
-                </Icon>
-                <Icon>
-                    <SearchOutlinedIcon/>
-                </Icon>
-                <Icon>
-                    <FavoriteBorderOutlinedIcon/>
-                </Icon>
+            <Info>{item.inStock ?
+                <>
+                    <Icon>
+                        <ShoppingCartOutlinedIcon/>
+                    </Icon>
+                    <Icon>
+                        <SearchOutlinedIcon/>
+                    </Icon>
+                    <Icon>
+                        <FavoriteBorderOutlinedIcon/>
+                    </Icon>
+                </> :
+                <Text>
+                   Item out of stock.
+                </Text>
+                    }
             </Info>
         </Container>
     );
