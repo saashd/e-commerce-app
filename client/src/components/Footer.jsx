@@ -67,6 +67,13 @@ const ListItem = styled.li`
   margin-bottom: 10px;
 `;
 
+
+const LinkItem = styled(Link)`
+  color: black;
+  text-decoration: none;
+`;
+
+
 const Right = styled.div`
   flex: 1;
   padding: 20px;
@@ -83,6 +90,7 @@ const ContactItem = styled.div`
 const Payment = styled.img`
   width: 50%;
 `;
+
 
 const Footer = () => {
     return (
@@ -111,31 +119,30 @@ const Footer = () => {
             </Left>
             <Center>
                 <Title>Useful Links</Title>
-
                 <List>
                     <ListItem>
-                        <Link to="/">
+                        <LinkItem to="/">
                             Home
-                        </Link>
+                        </LinkItem>
                     </ListItem>
                     <ListItem>
-                        <Link to="/cart">Cart
-                        </Link>
+                        <LinkItem to="/cart">Cart
+                        </LinkItem>
                     </ListItem>
                     <ListItem>
-                        <Link to="/products/houseplants">
+                        <LinkItem to="/products/houseplants">
                             House Plants
-                        </Link>
+                        </LinkItem>
                     </ListItem>
                     <ListItem>
-                        <Link to="/products/pots">
+                        <LinkItem to="/products/pots">
                             Pots
-                        </Link>
+                        </LinkItem>
                     </ListItem>
                     <ListItem>
-                        <Link to="/products/accessories">
+                        <LinkItem to="/products/accessories">
                             Accessories
-                        </Link>
+                        </LinkItem>
                     </ListItem>
 
                     {/*<ListItem>My Account</ListItem>*/}

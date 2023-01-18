@@ -65,7 +65,7 @@ const ProductList = () => {
                 {cat !== "houseplants" &&
                     <Filter>
                         <FilterText>Filter Products:</FilterText>
-                        <Select name="colors" onChange={handleFilters}>
+                        <Select name="color" onChange={handleFilters}>
                             <Option disabled>Color</Option>
                             <Option>all</Option>
                             <Option>white</Option>

@@ -7,8 +7,11 @@ import Navbar from "../components/Navbar";
 import Newsletter from "../components/Newsletter";
 import {mobile} from "../responsive";
 import {useEffect, useState} from "react";
-import {publicRequest} from "../requestMethods";
 import {useParams} from 'react-router-dom'
+import {addProduct} from "../redux/cartRedux";
+import {useDispatch} from "react-redux";
+import axios from "axios";
+
 
 const Container = styled.div``;
 
@@ -65,8 +68,10 @@ const FilterColor = styled.div`
   height: 20px;
   border-radius: 50%;
   background-color: ${(props) => props.color};
-  margin: 0px 5px;
+  margin: 0px 10px;
   cursor: pointer;
+  box-shadow: ${(props) => props.color === props.selectedColor ? `0px 0px 0px 3px ${props.color},0px 0px 0px 4px black` : "0px 0px 0px 1px black"};
+
 `;
 
 const AddContainer = styled.div`
@@ -101,6 +106,12 @@ const Button = styled.button`
   cursor: pointer;
   font-weight: 500;
 
+  &:disabled {
+    cursor: not-allowed;
+
+  }
+
+
   &:hover {
     background-color: #f8f4f4;
   }
@@ -111,13 +122,14 @@ const Product = () => {
     const [product, setProduct] = useState({});
     const [quantity, setQuantity] = useState(1);
     const [color, setColor] = useState("");
-
-
+    const dispatch = useDispatch();
     useEffect(() => {
         const getProduct = async () => {
             try {
-                const res = await publicRequest.get("/products/find/" + id);
+                const res = await axios.get("/products/find/" + id);
                 setProduct(res.data);
+
+                res.data.color.length !== 0 && setColor(res.data.color[0]);
             } catch {
             }
         };
@@ -133,6 +145,10 @@ const Product = () => {
     };
 
 
+    const handleClick = () => {
+        dispatch(addProduct({...product, quantity, color}))
+    }
+
     return (
         <Container>
             <Navbar/>
@@ -145,22 +161,24 @@ const Product = () => {
                     <Title>{product.title}</Title>
                     <Desc>{product.desc}</Desc>
                     <Price>$ {product.price}</Price>
-                    {(product.colors && product.colors.length!==0) &&
+                    {(product.color && product.color.length !== 0) &&
 
-                    <Filter>
-                        <FilterTitle>Color</FilterTitle>
-                        {product.colors.map((c) => (
-                            <FilterColor color={c} key={c} onClick={() => setColor(c)}/>
-                        ))}
-                    </Filter>
-                }
+                        <Filter>
+                            <FilterTitle>Color</FilterTitle>
+                            {product.color.map((c) => (
+                                <FilterColor selectedColor={color} color={c} key={c} onClick={() => setColor(c)}/>
+                            ))}
+                        </Filter>
+
+                    }
                     <AddContainer>
                         <AmountContainer>
                             <RemoveIcon onClick={() => handleQuantity("dec")}/>
                             <Amount>{quantity}</Amount>
                             <AddIcon onClick={() => handleQuantity("inc")}/>
                         </AmountContainer>
-                        <Button>ADD TO CART</Button>
+                        <Button onClick={handleClick} disabled={product.color && product.color.length !== 0 && !color}>ADD
+                            TO CART</Button>
                     </AddContainer>
                 </InfoContainer>
             </Wrapper>

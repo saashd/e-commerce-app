@@ -77,6 +77,7 @@ const Link = styled.a`
 
 const Navbar = () => {
     const user = useSelector((state) => state.user.currentUser);
+    const quantity = useSelector((state) => state.cart.quantity);
     const dispatch = useDispatch();
     return (
         <Container>
@@ -105,7 +106,7 @@ const Navbar = () => {
                     </>}
                     <Link href="/cart">
                         <MenuItem>
-                            <Badge badgeContent={5} color="primary">
+                            <Badge badgeContent={quantity} color="primary">
                                 <ShoppingCartOutlinedIcon/>
                             </Badge>
                         </MenuItem>

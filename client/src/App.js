@@ -9,7 +9,10 @@ import Register from "./pages/Register";
 import {useSelector} from "react-redux";
 import ProductList from "./pages/ProductList";
 import Product from "./pages/Product";
-
+import Cart from "./pages/Cart";
+import Success from "./pages/Success";
+import React from "react";
+import axios from "axios";
 
 
 function App() {
@@ -20,9 +23,11 @@ function App() {
                 <Route path="/" element={<Home/>}/>
                 <Route path="/products/:category" element={<ProductList/>}/>
                 <Route path="/product/:id" element={<Product/>}/>
+                <Route path="/cart" element={<Cart/>}/>
                 <Route path="/login" element={user ? <Navigate to="/"/> : <Login/>}/>
                 <Route path="/register" element={user ? <Navigate to="/"/> : <Register/>}/>
                 <Route path="/cart" element={<Home/>}/>
+                <Route path="/success" element={<Success/>}/>
             </Routes>
         </Router>
     );

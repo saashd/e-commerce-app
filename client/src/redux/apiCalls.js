@@ -1,11 +1,10 @@
 import {loginFailure, loginStart, loginSuccess} from "./userRedux";
-import {publicRequest} from "../requestMethods";
-
+import axios from "axios";
 
 export const register = async (dispatch, user) => {
     dispatch(loginStart());
     try {
-        const res = await publicRequest.post("/auth/register", user);
+        const res = await axios.post("/auth/register", user);
         const newUser = {username: res.data.username, password: res.data.username};
         dispatch(loginSuccess({...newUser}));
     } catch (err) {
@@ -15,7 +14,7 @@ export const register = async (dispatch, user) => {
 export const login = async (dispatch, user) => {
     dispatch(loginStart());
     try {
-        const res = await publicRequest.post("/auth/login", user);
+        const res = await axios.post("/auth/login", user);
         dispatch(loginSuccess(res.data));
     } catch (err) {
         dispatch(loginFailure());
