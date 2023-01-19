@@ -1,4 +1,6 @@
-## This is a full-stack [todo web app](https://todo.alexdruzina.com) built using the MERN stack (MongoDB, Express, React, and Node.js). 
+## This is a full-stack e-commerce app built using the MERN stack (MongoDB, Express, React, and Node.js).
+
+### [demo](https://plants.alexdruzina.com/)
 
 ### Client Side 🛠
 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
