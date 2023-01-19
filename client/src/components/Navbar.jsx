@@ -2,11 +2,13 @@ import Badge from '@mui/material/Badge';
 import SearchIcon from '@mui/icons-material/Search';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
+import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
 import React from "react";
 import styled from "styled-components";
 import {mobile} from "../responsive";
 import {useDispatch, useSelector} from "react-redux";
 import {logout} from "../redux/userRedux";
+import {Tooltip} from "@mui/material";
 
 
 const Container = styled.div`
@@ -77,7 +79,8 @@ const Link = styled.a`
 
 const Navbar = () => {
     const user = useSelector((state) => state.user.currentUser);
-    const quantity = useSelector((state) => state.cart.quantity);
+    const cart_quantity = useSelector((state) => state.cart.quantity);
+    const wish_quantity = useSelector((state) => state.wishList.quantity);
     const dispatch = useDispatch();
     return (
         <Container>
@@ -106,9 +109,21 @@ const Navbar = () => {
                     </>}
                     <Link href="/cart">
                         <MenuItem>
-                            <Badge badgeContent={quantity} color="primary">
+                            <Tooltip title="Cart">
+                                <Badge badgeContent={cart_quantity} color="primary">
                                 <ShoppingCartOutlinedIcon/>
                             </Badge>
+                            </Tooltip>
+
+                        </MenuItem>
+                    </Link>
+                    <Link href="/wishlist">
+                        <MenuItem>
+                            <Tooltip title="Wish List">
+                            <Badge badgeContent={wish_quantity} color="primary">
+                                <FavoriteOutlinedIcon/>
+                            </Badge>
+                                </Tooltip>
                         </MenuItem>
                     </Link>
                 </Right>

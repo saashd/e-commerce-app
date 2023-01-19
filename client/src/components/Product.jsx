@@ -1,8 +1,12 @@
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import styled from "styled-components";
 import {Link} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {addProduct, removeProduct} from "../redux/wishListRedux";
+import {useState} from "react";
 
 const Info = styled.div`
   opacity: 0;
@@ -66,6 +70,21 @@ const Icon = styled.div`
 `;
 
 const Product = ({item}) => {
+
+    const wishList = useSelector((state) => state.wishList.products);
+    const [inWishList,setInWishList]=useState(wishList.some(e => e._id === item._id))
+    const dispatch = useDispatch();
+    const handleClick = () => {
+        if (!inWishList) {
+            dispatch(addProduct({...item}))
+            setInWishList(true)
+
+        } else {
+            dispatch(removeProduct({...item}))
+            setInWishList(false)
+        }
+    }
+
     return (
         <Container inStock={item.inStock}>
             <Image src={item.img}/>
@@ -82,7 +101,9 @@ const Product = ({item}) => {
                     </Link>
 
                     <Icon>
-                        <FavoriteBorderOutlinedIcon/>
+                        {inWishList ? <FavoriteIcon onClick={handleClick}/> :
+                            <FavoriteBorderOutlinedIcon onClick={handleClick}/>}
+
                     </Icon>
                 </> :
                 <Text>

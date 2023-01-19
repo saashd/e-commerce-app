@@ -147,7 +147,10 @@ const Footer = () => {
 
                     {/*<ListItem>My Account</ListItem>*/}
                     {/*<ListItem>Order Tracking</ListItem>*/}
-                    {/*<ListItem>Wishlist</ListItem>*/}
+                    <ListItem>
+                        <LinkItem to="/wishlist">Wishlist
+                        </LinkItem>
+                    </ListItem>
                     {/*<ListItem>Terms</ListItem>*/}
                 </List>
             </Center>

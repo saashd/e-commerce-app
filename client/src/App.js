@@ -12,6 +12,7 @@ import Product from "./pages/Product";
 import Cart from "./pages/Cart";
 import Success from "./pages/Success";
 import React from "react";
+import WishList from "./pages/WishList";
 
 function App() {
     const user = useSelector((state) => state.user.currentUser);
@@ -22,6 +23,7 @@ function App() {
                 <Route path="/products/:category" element={<ProductList/>}/>
                 <Route path="/product/:id" element={<Product/>}/>
                 <Route path="/cart" element={<Cart/>}/>
+                <Route path="/wishlist" element={<WishList/>}/>
                 <Route path="/login" element={user ? <Navigate to="/"/> : <Login/>}/>
                 <Route path="/register" element={user ? <Navigate to="/"/> : <Register/>}/>
                 <Route path="/cart" element={<Home/>}/>
