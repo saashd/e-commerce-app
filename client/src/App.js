@@ -26,7 +26,6 @@ function App() {
                 <Route path="/wishlist" element={<WishList/>}/>
                 <Route path="/login" element={user ? <Navigate to="/"/> : <Login/>}/>
                 <Route path="/register" element={user ? <Navigate to="/"/> : <Register/>}/>
-                <Route path="/cart" element={<Home/>}/>
                 <Route path="/success" element={<Success/>}/>
             </Routes>
         </Router>

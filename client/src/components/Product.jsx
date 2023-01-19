@@ -1,4 +1,3 @@
-import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -89,11 +88,7 @@ const Product = ({item}) => {
         <Container inStock={item.inStock}>
             <Image src={item.img}/>
             <Info>{item.inStock ?
-                <> <Link to={`/cart`}>
-                    <Icon>
-                        <ShoppingCartOutlinedIcon/>
-                    </Icon>
-                </Link>
+                <>
                     <Link to={`/product/${item._id}`}>
                         <Icon>
                             <SearchOutlinedIcon/>

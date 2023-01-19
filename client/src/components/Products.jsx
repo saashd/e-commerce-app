@@ -1,7 +1,8 @@
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import Product from "./Product";
 import axios from "axios";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 const Container = styled.div`
   padding: 20px;
@@ -13,18 +14,24 @@ const Container = styled.div`
 const Products = ({cat, filters, sort}) => {
     const [products, setProducts] = useState([]);
     const [filteredProducts, setFilteredProducts] = useState([]);
+    const [lastId, setLastId] = useState(0);
+    const [tempId, setTempId] = useState(0);
+    const [limit, setLimit] = useState(5);
+    const [hasMore, setHasMore] = useState(true);
+
 
     useEffect(() => {
         const getProducts = async () => {
             try {
-                const res = await axios.get(cat ? `${process.env.REACT_APP_BASE_URL}api/products?category=${cat}` : `${process.env.REACT_APP_BASE_URL}api/products`);
-                setProducts(res.data);
+                const res = await axios.get(cat ? `${process.env.REACT_APP_BASE_URL}api/products?category=${cat}&lastId=${lastId}&limit=${limit}` : `${process.env.REACT_APP_BASE_URL}api/products`);
+                setProducts((products) => cat?[...products, ...res.data.products]:[...res.data.products]);
+                setTempId(res.data.lastId);
+                setHasMore(cat?res.data.hasMore:false);
             } catch (err) {
             }
         };
         getProducts();
-
-    }, [cat]);
+    }, [cat,setHasMore,lastId]);
 
     useEffect(() => {
         cat &&
@@ -44,13 +51,23 @@ const Products = ({cat, filters, sort}) => {
         }
     }, [sort]);
 
-    return (<Container>
-        {cat
-            ? filteredProducts.map((item) => <Product item={item} key={item.id}/>)
-            : products
-                .slice(0, 8)
-                .map((item) => <Product item={item} key={item.id}/>)}
-    </Container>);
+    const fetchMore = () => {
+        setLastId(tempId);
+    };
+
+    return (
+        <InfiniteScroll
+            dataLength={cat ? filteredProducts.length : products.length}
+            next={fetchMore}
+            hasMore={hasMore}
+            loader={<h4>Loading...</h4>}
+        ><Container>
+            {cat
+                ? filteredProducts.map((item) => <Product item={item} key={item.id}/>)
+                : products.map((item) => <Product item={item} key={item.id}/>)}
+        </Container>
+        </InfiniteScroll>);
+
 };
 
 export default Products;

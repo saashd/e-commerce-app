@@ -1,12 +1,14 @@
 import {useEffect, useState} from "react";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useLocation, useNavigate} from "react-router-dom";
 import axios from "axios";
+import {reset} from "../redux/cartRedux";
 
 
 const Success = () => {
     const navigate = useNavigate();
     const location = useLocation();
+    const dispatch =useDispatch();
     const data = location.state.stripeData;
     const cart = location.state.cart;
     const currentUser = useSelector((state) => state.user.currentUser);
@@ -31,6 +33,8 @@ const Success = () => {
             }
         };
         data && createOrder();
+        dispatch(reset({...cart}))
+
     }, [cart, data, currentUser]);
 
     return (
