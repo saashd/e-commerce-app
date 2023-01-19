@@ -12,8 +12,6 @@ import Product from "./pages/Product";
 import Cart from "./pages/Cart";
 import Success from "./pages/Success";
 import React from "react";
-import axios from "axios";
-
 
 function App() {
     const user = useSelector((state) => state.user.currentUser);

@@ -47,11 +47,6 @@ const TopButton = styled.button`
 const TopTexts = styled.div`
   ${mobile({display: "none"})}
 `;
-const TopText = styled.span`
-  text-decoration: underline;
-  cursor: pointer;
-  margin: 0px 10px;
-`;
 
 const Bottom = styled.div`
   display: flex;
@@ -203,7 +198,7 @@ const Cart = () => {
             }
         };
         stripeToken && makeRequest();
-    }, [stripeToken, cart.total, navigate]);
+    }, [stripeToken, cart, navigate]);
     return (
         <Container>
             <Navbar/>
