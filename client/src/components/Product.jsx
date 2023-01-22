@@ -1,14 +1,17 @@
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import styled from "styled-components";
+import styled, {css} from "styled-components";
 import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {addProduct, removeProduct} from "../redux/wishListRedux";
 import {useState} from "react";
+import {mobile} from "../responsive";
 
 const Info = styled.div`
-  opacity: 0;
+    ${props => props.inStock && css`
+      opacity: 0;
+  `}
   width: 100%;
   height: 100%;
   position: absolute;
@@ -31,13 +34,16 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #${(props) => props.inStock ? "008080" : "f1f1f1"};
-
+   ${props => props.inStock && css`
+      background-color: #008080;
+  `}
+ 
   position: relative;
-
-  &:hover ${Info} {
-    opacity: 1;
-  }
+  ${props => props.inStock && css`
+    &:hover ${Info} {
+      opacity: 1;
+    }
+  `}
 `;
 
 
@@ -47,7 +53,12 @@ const Image = styled.img`
 `;
 
 const Text = styled.h1`
-  color: #ffffff;
+  color:white;
+  position: absolute;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 4;
 `;
 
 const Icon = styled.div`
@@ -71,7 +82,7 @@ const Icon = styled.div`
 const Product = ({item}) => {
 
     const wishList = useSelector((state) => state.wishList.products);
-    const [inWishList,setInWishList]=useState(wishList.some(e => e._id === item._id))
+    const [inWishList, setInWishList] = useState(wishList.some(e => e._id === item._id))
     const dispatch = useDispatch();
     const handleClick = () => {
         if (!inWishList) {
@@ -87,7 +98,7 @@ const Product = ({item}) => {
     return (
         <Container inStock={item.inStock}>
             <Image src={item.img}/>
-            <Info>{item.inStock ?
+            <Info inStock={item.inStock}>{item.inStock ?
                 <>
                     <Link to={`/product/${item._id}`}>
                         <Icon>
@@ -106,6 +117,7 @@ const Product = ({item}) => {
                 </Text>
             }
             </Info>
+
         </Container>
     );
 };

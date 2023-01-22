@@ -7,8 +7,10 @@ export const register = async (dispatch, user) => {
         const res = await axios.post("/auth/register", user);
         const newUser = {username: res.data.username, password: res.data.username};
         dispatch(loginSuccess({...newUser}));
+        return false
     } catch (err) {
         dispatch(loginFailure());
+        return true
     }
 }
 export const login = async (dispatch, user) => {
@@ -16,7 +18,9 @@ export const login = async (dispatch, user) => {
     try {
         const res = await axios.post("/auth/login", user);
         dispatch(loginSuccess(res.data));
+        return false
     } catch (err) {
         dispatch(loginFailure());
+        return true
     }
 };

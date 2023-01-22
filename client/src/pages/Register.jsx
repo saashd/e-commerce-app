@@ -31,7 +31,7 @@ const Title = styled.h1`
 const Form = styled.form`
   display: flex;
   flex-wrap: wrap;
-    align-items: center;
+  align-items: center;
   justify-content: center;
 `;
 
@@ -66,11 +66,13 @@ const Register = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const [displayError, setDisplayError] = useState(null);
     const dispatch = useDispatch();
     const {isFetching, error} = useSelector((state) => state.user);
     const handleClick = (e) => {
         e.preventDefault();
-        register(dispatch, {username, email, password, confirmPassword});
+        register(dispatch, {username, email, password, confirmPassword}).then(r => setDisplayError(r)
+        )
 
     };
     return (
@@ -87,7 +89,7 @@ const Register = () => {
                         data in accordance with the <b>PRIVACY POLICY</b>
                     </Agreement>
                     <Button onClick={handleClick} disabled={isFetching}>CREATE</Button>
-                    {error && <Error>Something went wrong...</Error>}
+                    {displayError && <Error>Something went wrong...</Error>}
                 </Form>
             </Wrapper>
         </Container>

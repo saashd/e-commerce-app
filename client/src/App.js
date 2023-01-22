@@ -13,6 +13,7 @@ import Cart from "./pages/Cart";
 import Success from "./pages/Success";
 import React from "react";
 import WishList from "./pages/WishList";
+import "./App.css"
 
 function App() {
     const user = useSelector((state) => state.user.currentUser);
