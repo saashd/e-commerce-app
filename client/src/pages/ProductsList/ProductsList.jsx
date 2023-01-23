@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import Navbar from "../components/Navbar";
-import Announcement from "../components/Announcement";
-import Products from "../components/Products";
-import Newsletter from "../components/Newsletter";
-import Footer from "../components/Footer";
-import {mobile} from "../responsive";
+import Navbar from "../../components/Navbar";
+import Announcement from "../../components/Announcement";
+import Products from "../../components/Products";
+import Newsletter from "../../components/Newsletter";
+import Footer from "../../components/Footer";
+import {mobile} from "../../responsive";
 import {useLocation} from "react-router-dom";
 import {useState} from "react";
 
@@ -38,7 +38,7 @@ const Select = styled.select`
 `;
 const Option = styled.option``;
 
-const ProductList = () => {
+const ProductsList = () => {
     const location = useLocation();
     const cat = location.pathname.split("/")[2];
     const [sort, setSort] = useState("newest");
@@ -94,4 +94,4 @@ const ProductList = () => {
     );
 };
 
-export default ProductList;
+export default ProductsList;

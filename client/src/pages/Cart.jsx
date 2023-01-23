@@ -183,6 +183,7 @@ const Cart = () => {
                 ) :
                 dispatch(removeProduct({...product}));
             setOpen(false);
+            setSelectedProduct(null);
         } else {
             dispatch(
                 updateProduct({...product, quantity: product.quantity + 1}))

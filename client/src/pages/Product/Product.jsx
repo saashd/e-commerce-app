@@ -1,14 +1,14 @@
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import styled from "styled-components";
-import Announcement from "../components/Announcement";
-import Footer from "../components/Footer";
-import Navbar from "../components/Navbar";
-import Newsletter from "../components/Newsletter";
-import {mobile} from "../responsive";
+import Announcement from "../../components/Announcement";
+import Footer from "../../components/Footer";
+import Navbar from "../../components/Navbar";
+import Newsletter from "../../components/Newsletter";
+import {mobile} from "../../responsive";
 import {useEffect, useState} from "react";
 import {useParams} from 'react-router-dom'
-import {addProduct} from "../redux/cartRedux";
+import {addProduct} from "../../redux/cartRedux";
 import {useDispatch} from "react-redux";
 import axios from "axios";
 
