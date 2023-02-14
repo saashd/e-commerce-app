@@ -2,7 +2,6 @@ import {useState} from "react";
 import {addProduct} from "../../redux/apiCalls";
 import {useDispatch, useSelector} from "react-redux";
 import styled from "styled-components";
-import Wrapper from "../../components/admin/Wrapper";
 import {Alert, Box, Button, Collapse} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
@@ -16,7 +15,7 @@ const Container = styled.div`
 `
 
 const AddProductForm = styled.form`
-  margin-top: 10px;
+  display: contents;
 `
 
 const AddProductItem = styled.div`
@@ -41,11 +40,23 @@ const AddProductItemSelect = styled.select`
   padding: 10px;
 `
 
-const AddProductButton = styled(Button)`
-  margin-top: 10px;
+const AddProductButton = styled.button`
   padding: 7px 10px;
-`
+  margin: 0 10px 10px 10px;
+  right: 0;
+  position: absolute;
 
+  &:disabled {
+    color: gray;
+    cursor: not-allowed;
+  }
+`
+const AddProductActions = styled.div`
+  display: flex;
+  margin: 10px;
+  align-items: flex-end;
+  flex-direction: column;
+`
 export default function NewProduct() {
     const [inputs, setInputs] = useState({});
     const [file, setFile] = useState(null);
@@ -84,68 +95,64 @@ export default function NewProduct() {
                 setStatus('error');
                 setOpen(true);
             }
+        };
 
 
-        }
-    ;
-
-
-    return (<Wrapper>
-            <Container>
-                <h2>New Product</h2>
-                <AddProductForm>
-                    <AddProductItem>
-                        <AddProductItemLabel>Image</AddProductItemLabel>
-                        <AddProductItemInput
-                            type="file"
-                            id="file"
-                            onChange={(e) => setFile(e.target.files[0])}
-                        />
-                    </AddProductItem>
-                    <AddProductItem>
-                        <AddProductItemLabel>Title</AddProductItemLabel>
-                        <AddProductItemInput
-                            name="title"
-                            type="text"
-                            placeholder="Apple Airpods"
-                            onChange={handleChange}
-                        />
-                    </AddProductItem>
-                    <AddProductItem>
-                        <AddProductItemLabel>Description</AddProductItemLabel>
-                        <AddProductItemInput
-                            name="desc"
-                            type="text"
-                            placeholder="description..."
-                            onChange={handleChange}
-                        />
-                    </AddProductItem>
-                    <AddProductItem>
-                        <AddProductItemLabel>Price</AddProductItemLabel>
-                        <AddProductItemInput
-                            name="price"
-                            type="number"
-                            placeholder="100"
-                            onChange={handleChange}
-                        />
-                    </AddProductItem>
-                    <AddProductItem>
-                        <AddProductItemLabel>Categories</AddProductItemLabel>
-                        <AddProductItemInput type="text" placeholder="jeans,skirts" onChange={handleCat}/>
-                    </AddProductItem>
-                    <AddProductItem>
-                        <AddProductItemLabel>Stock</AddProductItemLabel>
-                        <AddProductItemSelect name="inStock" onChange={handleChange}>
-                            <option value="true">Yes</option>
-                            <option value="false">No</option>
-                        </AddProductItemSelect>
-                    </AddProductItem>
-                    <AddProductButton disabled={isFetching} onClick={handleClick}>
+    return (
+        <Container>
+            <AddProductForm>
+                <AddProductItem>
+                    <AddProductItemLabel>Image</AddProductItemLabel>
+                    <AddProductItemInput
+                        type="file"
+                        id="file"
+                        onChange={(e) => setFile(e.target.files[0])}
+                    />
+                </AddProductItem>
+                <AddProductItem>
+                    <AddProductItemLabel>Title</AddProductItemLabel>
+                    <AddProductItemInput
+                        name="title"
+                        type="text"
+                        placeholder="Monstera Alba"
+                        onChange={handleChange}
+                    />
+                </AddProductItem>
+                <AddProductItem>
+                    <AddProductItemLabel>Description</AddProductItemLabel>
+                    <AddProductItemInput
+                        name="desc"
+                        type="text"
+                        placeholder="description..."
+                        onChange={handleChange}
+                    />
+                </AddProductItem>
+                <AddProductItem>
+                    <AddProductItemLabel>Price</AddProductItemLabel>
+                    <AddProductItemInput
+                        name="price"
+                        type="number"
+                        placeholder="100"
+                        onChange={handleChange}
+                    />
+                </AddProductItem>
+                <AddProductItem>
+                    <AddProductItemLabel>Categories</AddProductItemLabel>
+                    <AddProductItemInput type="text" placeholder="plants,accessories" onChange={handleCat}/>
+                </AddProductItem>
+                <AddProductItem>
+                    <AddProductItemLabel>Stock</AddProductItemLabel>
+                    <AddProductItemSelect name="inStock" onChange={handleChange}>
+                        <option value="true">Yes</option>
+                        <option value="false">No</option>
+                    </AddProductItemSelect>
+                </AddProductItem>
+                <AddProductActions>
+                     <AddProductButton disabled={isFetching} onClick={handleClick}>
                         Create
                     </AddProductButton>
-                </AddProductForm>
-                {status &&
-                    <Box sx={{width: '30%'}}>
+                    {status &&
+                    <Box sx={{width: '100%'}}>
                         <Collapse in={open}>
                             <Alert severity={status}
                                    action={
@@ -158,8 +165,10 @@ export default function NewProduct() {
                                    }
                             >{status === "success" ? 'New product created!' : "Error occured while creating new product"}</Alert>
                         </Collapse>
-                    </Box>}
-            </Container>
-        </Wrapper>
+                    </Box>
+                    }
+                </AddProductActions>
+            </AddProductForm>
+        </Container>
     );
 }

@@ -24,14 +24,14 @@ const Products = ({cat, filters, sort}) => {
         const getProducts = async () => {
             try {
                 const res = await axios.get(cat ? `${process.env.REACT_APP_BASE_URL}api/products?category=${cat}&lastId=${lastId}&limit=${limit}` : `${process.env.REACT_APP_BASE_URL}api/products`);
-                setProducts((products) => cat?[...products, ...res.data.products]:[...res.data.products]);
+                setProducts((products) => cat ? [...products, ...res.data.products] : [...res.data.products]);
                 setTempId(res.data.lastId);
-                setHasMore(cat?res.data.hasMore:false);
+                setHasMore(cat ? res.data.hasMore : false);
             } catch (err) {
             }
         };
         getProducts();
-    }, [cat,setHasMore,lastId]);
+    }, [cat, setHasMore, lastId]);
 
     useEffect(() => {
         cat &&
@@ -64,7 +64,7 @@ const Products = ({cat, filters, sort}) => {
         ><Container>
             {cat
                 ? filteredProducts.map((item) => <Product item={item} key={item.id}/>)
-                : products.slice(0,8).map((item) => <Product item={item} key={item.id}/>)}
+                : products.slice(0, 8).map((item) => <Product item={item} key={item.id}/>)}
         </Container>
         </InfiniteScroll>);
 

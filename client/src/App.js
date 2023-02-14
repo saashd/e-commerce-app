@@ -18,6 +18,9 @@ import HomeAdmin from "./pages/Home/HomeAdmin";
 import ProductsListAdmin from "./pages/ProductsList/ProductsListAdmin";
 import ProductAdmin from "./pages/Product/ProductAdmin";
 import NewProduct from "./pages/Product/NewProduct";
+import UsersListAdmin from "./pages/User/UsersListAdmin";
+import NewUser from "./pages/User/NewUser";
+import UserAdmin from "./pages/User/UserAdmin";
 
 
 function App() {
@@ -30,6 +33,9 @@ function App() {
                     <Route path="/products" element={<ProductsListAdmin/>}/>
                     <Route path="/product/:id" element={<ProductAdmin/>}/>
                     <Route path="/newproduct" element={<NewProduct/>}/>
+                    <Route path="/users" element={<UsersListAdmin/>}/>
+                    <Route path="/user/:id" element={<UserAdmin/>}/>
+                    <Route path="/newuser" element={<NewUser/>}/>
                     <Route path="/login" element={user ? <Navigate to="/"/> : <Login/>}/>
                     <Route path="/register" element={user ? <Navigate to="/"/> : <Register/>}/>
                 </Routes>

@@ -6,12 +6,15 @@ import RoomIcon from '@mui/icons-material/Room';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import MailOutlinedIcon from '@mui/icons-material/MailOutlined';
 import styled from "styled-components";
-import {mobile} from "../responsive";
+import {device} from "../responsive";
 import {Link} from "react-router-dom";
 
 const Container = styled.div`
   display: flex;
-  ${mobile({flexDirection: "column"})}
+  @media only screen and ${device.mobile} {
+    flex-direction: column;
+  }
+
 `;
 
 const Left = styled.div`
@@ -21,10 +24,17 @@ const Left = styled.div`
   padding: 20px;
 `;
 
-const Logo = styled.h1``;
+const Logo = styled.h1`
+  @media only screen and ${device.mobile} {
+    font-size: 24px;
+  }
+`;
 
 const Desc = styled.p`
   margin: 20px 0px;
+  @media only screen and ${device.mobile} {
+    margin: 10px 0px;
+  }
 `;
 
 const SocialContainer = styled.div`
@@ -46,7 +56,9 @@ const SocialIcon = styled.div`
 const Center = styled.div`
   flex: 1;
   padding: 20px;
-  ${mobile({display: "none"})}
+  @media only screen and ${device.mobile} {
+    display: none;
+  }
 `;
 
 const Title = styled.h3`
@@ -77,8 +89,9 @@ const LinkItem = styled(Link)`
 const Right = styled.div`
   flex: 1;
   padding: 20px;
-  ${mobile({backgroundColor: "#fff8f8"})}
-
+  @media only screen and ${device.mobile} {
+    background-color: #fff8f8;
+  }
 `;
 
 const ContactItem = styled.div`
@@ -144,14 +157,10 @@ const Footer = () => {
                             Accessories
                         </LinkItem>
                     </ListItem>
-
-                    {/*<ListItem>My Account</ListItem>*/}
-                    {/*<ListItem>Order Tracking</ListItem>*/}
                     <ListItem>
                         <LinkItem to="/wishlist">Wishlist
                         </LinkItem>
                     </ListItem>
-                    {/*<ListItem>Terms</ListItem>*/}
                 </List>
             </Center>
             <Right>

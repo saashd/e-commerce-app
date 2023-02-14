@@ -4,15 +4,15 @@ import Sidebar from "./Sidebar";
 import styled from "styled-components";
 
 const Conteiner = styled.div`
-  flex: 4;
-  top: 50px;
   position: relative;
-  width: calc(100vw - 250px);`
+  padding: 0 30px 28px 27px;
+`
+
 
 function Wrapper(props) {
     return (<>
         <Topbar/>
-        <div style={{display: "flex"}}>
+        <div>
             <Sidebar/>
             <Conteiner>
                 {props.children}

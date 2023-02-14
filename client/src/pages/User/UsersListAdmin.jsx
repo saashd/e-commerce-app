@@ -1,18 +1,28 @@
 import {Link} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {deleteProduct, getProducts} from "../../redux/apiCalls";
+import {deleteUser, getUsers} from "../../redux/apiCalls";
 import {DataGrid} from '@mui/x-data-grid'
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import {Box, Dialog, DialogActions, DialogTitle, IconButton, LinearProgress, Button} from "@mui/material";
+import {
+    Box,
+    Dialog,
+    DialogActions,
+    DialogTitle,
+    IconButton,
+    LinearProgress,
+    Button,
+    Collapse,
+    Alert
+} from "@mui/material";
 import Wrapper from "../../components/admin/Wrapper";
 import styled from "styled-components";
 import CloseIcon from "@mui/icons-material/Close";
-import NewProduct from "../Product/NewProduct";
+import NewUser from "./NewUser";
 
 
-const ProductAddButton = styled.button`
+const UserAddButton = styled.button`
   border: none;
   padding: 8px;
   background-color: teal;
@@ -23,83 +33,75 @@ const ProductAddButton = styled.button`
   margin: 0 10px 10px 30px;
   display: -webkit-box;
 `
-const NewProductTitle = styled.h2`
+const NewUserTitle = styled.h2`
   display: flex;
   justify-content: center;
 `
 
-const ProductList = () => {
+const UsersList = () => {
     const dispatch = useDispatch();
-    const {products} = useSelector((state) => state.product.products);
-    const {isFetching} = useSelector((state) => state.product);
-    const [openDeleteProduct, setOpenDeleteProduct] = useState(false);
+    const {isFetching, users, error} = useSelector((state) => state.user);
+    const [openDeleteUser, setOpenDeleteUser] = useState(false);
     const [openDialog, setOpenDialog] = useState(false);
-    const [selectedProduct, setSelectedProduct] = useState(null)
+    const [selectedUser, setSelectedUser] = useState(null)
 
     const handleOpenDialog = () => {
         setOpenDialog(!openDialog);
 
     }
-    const handleDeleteProductDialog = (product = null) => {
-        setOpenDeleteProduct(!openDeleteProduct);
-        setSelectedProduct(product)
+    const handleDeleteUserDialog = (user = null) => {
+        setOpenDeleteUser(!openDeleteUser);
+        setSelectedUser(user)
     };
 
     useEffect(() => {
-        getProducts(dispatch);
+        getUsers(dispatch);
     }, [dispatch]);
 
     const handleDelete = (id) => {
-        deleteProduct(id, dispatch);
-        setOpenDeleteProduct(false);
-        setSelectedProduct(null);
+        deleteUser(id, dispatch);
+        setOpenDeleteUser(false);
+        setSelectedUser(null);
     };
 
     const columns = [
-        {field: "_id", headerName: "ID", width: 220},
+        {field: "_id", headerName: "ID", width: 300},
         {
-            field: "title",
-            headerName: "Product",
+            field: "username",
+            headerName: "User",
             width: 200,
         },
+
+        {field: "email", headerName: "Email", width: 300},
         {
-            field: "product", headerName: "Img", width: 200,
-            renderCell: (params) => {
-                return (
-                    <img className="productListImg" style={{width: "40%"}} src={params.row.img} alt=""/>
-                );
-            },
-        },
-        {field: "inStock", headerName: "Stock", width: 200},
-        {
-            field: "price",
-            headerName: "Price",
-            width: 160,
+            field: "isAdmin",
+            headerName: "Admin",
+            width: 200,
         },
         {
             field: "action",
             headerName: "Action",
-            width: 150,
+            width: 200,
             renderCell: (params) => {
                 return (
                     <>
-                        <Link to={"/product/" + params.row._id}>
+                        <Link to={"/user/" + params.row._id}>
                             <IconButton><EditOutlinedIcon/></IconButton>
                         </Link>
                         <IconButton
-                            onClick={() => handleDeleteProductDialog(params.row._id)}><DeleteOutlineOutlinedIcon/></IconButton>
+                            onClick={() => handleDeleteUserDialog(params.row._id)}><DeleteOutlineOutlinedIcon/></IconButton>
 
                     </>
                 );
             },
         },
     ];
-    if (isFetching || !products) {
+    if (isFetching || !users) {
         return (<Wrapper><LinearProgress color="success"/></Wrapper>)
     }
     return (
         <Wrapper>
-            <ProductAddButton onClick={handleOpenDialog}>Create</ProductAddButton>
+            <UserAddButton onClick={handleOpenDialog}>Create</UserAddButton>
             <Box sx={{
                 height: "72vh", width: '95%', display: "flex",
                 margin: "auto",
@@ -108,7 +110,7 @@ const ProductList = () => {
             }}>
                 <DataGrid
                     rowHeight={80}
-                    rows={products}
+                    rows={users}
                     disableSelectionOnClick
                     columns={columns}
                     pageSize={5}
@@ -116,14 +118,14 @@ const ProductList = () => {
                     // checkboxSelection
                 />
             </Box>
-            <Dialog open={openDeleteProduct}
-                    onClose={handleDeleteProductDialog}>
+            <Dialog open={openDeleteUser}
+                    onClose={handleDeleteUserDialog}>
                 <DialogTitle>
-                    Are you sure you want to remove this item?
+                    Are you sure you want to remove this user?
                 </DialogTitle>
                 <DialogActions>
-                    <Button onClick={handleDeleteProductDialog}>NO</Button>
-                    <Button onClick={() => handleDelete(selectedProduct)}>
+                    <Button onClick={handleDeleteUserDialog}>NO</Button>
+                    <Button onClick={() => handleDelete(selectedUser)}>
                         YES
                     </Button>
                 </DialogActions>
@@ -137,13 +139,13 @@ const ProductList = () => {
                     <IconButton onClick={handleOpenDialog}>
                         <CloseIcon/>
                     </IconButton>
-                    <NewProductTitle>New Product</NewProductTitle>
+                    <NewUserTitle>New User</NewUserTitle>
                 </DialogTitle>
-                <NewProduct/>
+                <NewUser handleOpenDialog={handleOpenDialog}/>
             </Dialog>
         </Wrapper>
     );
 }
 
 
-export default ProductList;
+export default UsersList;

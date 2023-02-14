@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import {mobile} from "../responsive";
+import {device} from "../responsive";
 import {register} from "../redux/apiCalls";
 import {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
@@ -20,12 +20,15 @@ const Wrapper = styled.div`
   width: 40%;
   padding: 20px;
   background-color: white;
-  ${mobile({width: "75%"})}
+    @media only screen and ${device.mobile} {
+    width: 80%;
+  }
 `;
 
 const Title = styled.h1`
   font-size: 24px;
   font-weight: 300;
+  text-align: center;
 `;
 
 const Form = styled.form`
@@ -55,6 +58,14 @@ const Button = styled.button`
   color: white;
   cursor: pointer;
 
+  &:disabled {
+    color: green;
+    cursor: not-allowed;
+  }
+     @media only screen and ${device.mobile} {
+       padding: 5px 10px;
+  }
+
 
 `;
 const Error = styled.span`
@@ -71,8 +82,12 @@ const Register = () => {
     const {isFetching, error} = useSelector((state) => state.user);
     const handleClick = (e) => {
         e.preventDefault();
-        register(dispatch, {username, email, password, confirmPassword}).then(r => setDisplayError(r)
-        )
+        if (password === confirmPassword) {
+            register(dispatch, {username, email, password, confirmPassword}).then(r => setDisplayError(r)
+            )
+        } else {
+            window.alert('passwords dont match')
+        }
 
     };
     return (

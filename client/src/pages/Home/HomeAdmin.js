@@ -6,11 +6,17 @@ import axios from "axios";
 import Chart from "../../components/admin/Chart";
 import styled from "styled-components";
 import Wrapper from "../../components/admin/Wrapper";
+import {device} from "../../responsive";
 
 
 const HomeWidgets = styled.div`
   display: flex;
   margin: 20px;
+  @media only screen and ${device.mobile} {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
 `
 
 const HomeAdmin = () => {

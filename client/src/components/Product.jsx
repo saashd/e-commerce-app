@@ -6,7 +6,7 @@ import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {addProduct, removeProduct} from "../redux/wishListRedux";
 import {useState} from "react";
-import {mobile} from "../responsive";
+import {device} from "../responsive";
 
 const Info = styled.div`
     ${props => props.inStock && css`
@@ -37,19 +37,29 @@ const Container = styled.div`
    ${props => props.inStock && css`
       background-color: #008080;
   `}
- 
   position: relative;
   ${props => props.inStock && css`
     &:hover ${Info} {
       opacity: 1;
     }
   `}
+  
+    @media only screen and ${device.mobile} {
+    height:400px;
+    min-width: 200px;
+  }
 `;
 
 
 const Image = styled.img`
-  height: 90%;
+   float: left;
+    width:  300px;
+    height: 400px;
+    object-fit: cover;
   z-index: 2;
+  @media only screen and ${device.mobile} {
+    overflow: hidden;
+  }
 `;
 
 const Text = styled.h1`

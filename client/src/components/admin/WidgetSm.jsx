@@ -2,6 +2,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import {useEffect, useState} from "react";
 import axios from "axios";
 import styled from "styled-components";
+import {device} from "../../responsive";
 
 const Conteiner = styled.div`
   flex: 1;
@@ -9,11 +10,17 @@ const Conteiner = styled.div`
   box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
   padding: 20px;
   margin-right: 20px;
+  @media only screen and ${device.mobile} {
+    margin-right: 0px;
+  }
 `
 
 const WidgetSmTitle = styled.h3`
  font-size: 22px;
   font-weight: 600;
+    @media only screen and ${device.mobile} {
+    font-size: 15px;
+  }
 `
 
 const WidgetSmList = styled.ul`
@@ -35,6 +42,9 @@ const WidgetSmUser = styled.div`
 `
 const WidgetSmUsername = styled.span`
   font-weight: 600;
+      @media only screen and ${device.mobile} {
+    font-size: 10px;
+  }
 `
 
 
@@ -47,11 +57,18 @@ const WidgetSmButton = styled.button`
   background-color: #eeeef7;
   color: #555;
   cursor: pointer;
+  @media only screen and ${device.mobile} {
+    font-size: 10px;
+    padding: 5px 5px;
+  }
 `
 
 const WidgetSmIcon = styled.div`
   font-size: 16px !important;
   margin-right: 5px;
+  @media only screen and ${device.mobile} {
+    font-size: 10px;
+  }
 `
 
 export default function WidgetSm() {

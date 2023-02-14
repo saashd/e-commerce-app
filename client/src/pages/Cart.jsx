@@ -5,7 +5,7 @@ import styled from "styled-components";
 import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
-import {mobile} from "../responsive";
+import {device} from "../responsive";
 import StripeCheckout from "react-stripe-checkout";
 import {useEffect, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
@@ -20,12 +20,18 @@ const Container = styled.div``;
 
 const Wrapper = styled.div`
   padding: 20px;
-  ${mobile({padding: "10px"})}
+  @media only screen and ${device.mobile} {
+    padding: 10px;
+  }
+
 `;
 
 const Title = styled.h1`
   font-weight: 300;
   text-align: center;
+  @media only screen and ${device.mobile} {
+    font-size: 20px;
+  }
 `;
 
 const Top = styled.div`
@@ -43,16 +49,18 @@ const TopButton = styled.button`
   background-color: ${(props) =>
           props.type === "filled" ? "black" : "transparent"};
   color: ${(props) => props.type === "filled" && "white"};
-`;
-
-const TopTexts = styled.div`
-  ${mobile({display: "none"})}
+  @media only screen and ${device.mobile} {
+    font-size: 10px;
+  }
 `;
 
 const Bottom = styled.div`
   display: flex;
   justify-content: space-between;
-  ${mobile({flexDirection: "column"})}
+  @media only screen and ${device.mobile} {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 const Info = styled.div`
@@ -62,7 +70,9 @@ const Info = styled.div`
 const Product = styled.div`
   display: flex;
   justify-content: space-between;
-  ${mobile({flexDirection: "column"})}
+  @media only screen and ${device.mobile} {
+    flex-direction: column;
+  }
 `;
 
 const ProductDetail = styled.div`
@@ -72,6 +82,9 @@ const ProductDetail = styled.div`
 
 const Image = styled.img`
   width: 200px;
+  @media only screen and ${device.mobile} {
+    width: 100px;
+  }
 `;
 
 const Details = styled.div`
@@ -79,12 +92,14 @@ const Details = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  
 `;
 
 const ProductName = styled.span``;
 
 const ProductColor = styled.span`
   display: flex;
+  align-items: center;
 `;
 
 const Color = styled.div`
@@ -94,6 +109,11 @@ const Color = styled.div`
   background-color: ${(props) => props.color};
   box-shadow: ${(props) => `0px 0px 0px 3px ${props.color},0px 0px 0px 4px black`};
   margin: 0px 10px;
+  @media only screen and ${device.mobile} {
+    width: 10px;
+    height: 10px;
+    margin: 0px 5px;
+  }
 `;
 
 const ProductId = styled.span``;
@@ -115,13 +135,18 @@ const ProductAmountContainer = styled.div`
 const ProductAmount = styled.div`
   font-size: 24px;
   margin: 5px;
-  ${mobile({margin: "5px 15px"})}
+  @media only screen and ${device.mobile} {
+    margin: 5px 15px;
+  }
 `;
 
 const ProductPrice = styled.div`
   font-size: 30px;
   font-weight: 200;
-  ${mobile({marginBottom: "20px"})}
+  @media only screen and ${device.mobile} {
+    margin-bottom: 20px;
+    font-size: 25px;
+  }
 `;
 
 const Hr = styled.hr`

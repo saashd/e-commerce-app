@@ -3,11 +3,17 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import {useEffect, useState} from "react";
 import axios from "axios";
 import styled from "styled-components";
+import {device} from "../../responsive";
 
 const Featured = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
+  @media only screen and ${device.mobile} {
+    flex-direction: column;
+    align-items: stretch;
+    width: 80%;
+  }
 `
 
 const FeaturedItem = styled.div`
@@ -18,11 +24,21 @@ const FeaturedItem = styled.div`
   cursor: pointer;
   -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
   box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+
+  @media only screen and ${device.mobile} {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+
 `
 
 
 const FeaturedTitle = styled.span`
   font-size: 20px;
+  @media only screen and ${device.mobile} {
+    font-size: 15px;
+  }
 `
 
 
@@ -35,6 +51,10 @@ const FeaturedMoneyContainer = styled.div`
 const FeaturedMoney = styled.span`
   font-size: 30px;
   font-weight: 600;
+  @media only screen and ${device.mobile} {
+    font-size: 20px;
+    font-weight: 500;
+  }
 `
 
 
@@ -47,7 +67,7 @@ const FeaturedMoneyRate = styled.span`
 const FeaturedIcon = styled.div`
   font-size: 14px;
   margin-left: 5px;
-  color: ${props => props.perc < 0?"red":"green"};
+  color: ${props => props.perc < 0 ? "red" : "green"};
 
 
 `
@@ -55,6 +75,9 @@ const FeaturedIcon = styled.div`
 const FeaturedSub = styled.span`
   font-size: 15px;
   color: gray;
+  @media only screen and ${device.mobile} {
+    font-size: 10px;
+  }
 `
 export default function FeaturedInfo() {
     const [income, setIncome] = useState([]);
@@ -96,11 +119,11 @@ export default function FeaturedInfo() {
                         <FeaturedIcon perc={-1.4}>
                             <ArrowDownwardIcon/>
                         </FeaturedIcon>
-                        </FeaturedMoneyRate>
+                    </FeaturedMoneyRate>
                 </FeaturedMoneyContainer>
-                <FeaturedSub >Compared to last month</FeaturedSub>
+                <FeaturedSub>Compared to last month</FeaturedSub>
             </FeaturedItem>
-             <FeaturedItem>
+            <FeaturedItem>
                 <FeaturedTitle>Costs</FeaturedTitle>
                 <FeaturedMoneyContainer>
                     <FeaturedMoney>$2,225</FeaturedMoney>
@@ -109,10 +132,10 @@ export default function FeaturedInfo() {
                         <FeaturedIcon perc={2.4}>
                             <ArrowUpwardIcon/>
                         </FeaturedIcon>
-                        </FeaturedMoneyRate>
+                    </FeaturedMoneyRate>
                 </FeaturedMoneyContainer>
-                <FeaturedSub >Compared to last month</FeaturedSub>
+                <FeaturedSub>Compared to last month</FeaturedSub>
             </FeaturedItem>
         </Featured>
-);
+    );
 }

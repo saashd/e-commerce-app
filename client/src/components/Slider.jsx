@@ -3,7 +3,7 @@ import ArrowRightOutlinedIcon from '@mui/icons-material/ArrowRightOutlined';
 import {useState} from "react";
 import styled from "styled-components";
 import {sliderItems} from "../data"
-import {mobile} from "../responsive";
+import {device} from "../responsive";
 import {Link} from "react-router-dom";
 
 const Container = styled.div`
@@ -12,7 +12,9 @@ const Container = styled.div`
   display: flex;
   position: relative;
   overflow: hidden;
-  ${mobile({display: "none"})}
+  @media only screen and ${device.mobile} {
+    display: none;
+  }
 `;
 
 const Arrow = styled.div`

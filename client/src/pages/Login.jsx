@@ -1,7 +1,7 @@
 import {useState} from "react";
 import styled from "styled-components";
 import {login} from "../redux/apiCalls";
-import {mobile} from "../responsive";
+import {device} from "../responsive";
 import {useDispatch, useSelector} from "react-redux";
 
 const Container = styled.div`
@@ -20,17 +20,21 @@ const Wrapper = styled.div`
   width: 25%;
   padding: 20px;
   background-color: white;
-  ${mobile({width: "75%"})}
+  @media only screen and ${device.mobile} {
+    width: 80%;
+  }
 `;
 
 const Title = styled.h1`
   font-size: 24px;
   font-weight: 300;
+  text-align: center;
 `;
 
 const Form = styled.form`
   display: flex;
   flex-direction: column;
+  align-items: center;
 `;
 
 const Input = styled.input`
@@ -52,6 +56,11 @@ const Button = styled.button`
   &:disabled {
     color: green;
     cursor: not-allowed;
+  }
+
+  @media only screen and ${device.mobile} {
+    padding: 5px 5px;
+    width: 20%;
   }
 `;
 

@@ -5,7 +5,7 @@ import Announcement from "../../components/Announcement";
 import Footer from "../../components/Footer";
 import Navbar from "../../components/Navbar";
 import Newsletter from "../../components/Newsletter";
-import {mobile} from "../../responsive";
+import {device} from "../../responsive";
 import {useEffect, useState} from "react";
 import {useParams} from 'react-router-dom'
 import {addProduct} from "../../redux/cartRedux";
@@ -18,7 +18,10 @@ const Container = styled.div``;
 const Wrapper = styled.div`
   padding: 50px;
   display: flex;
-  ${mobile({padding: "10px", flexDirection: "column"})}
+  @media only screen and ${device.mobile} {
+    padding: 10px;
+    align-items: center;
+  }
 `;
 
 const ImgContainer = styled.div`
@@ -26,29 +29,43 @@ const ImgContainer = styled.div`
 `;
 
 const Image = styled.img`
-  width: 100%;
-  height: 90vh;
+  width: 90%;
+  height: 90%;
   object-fit: cover;
-  ${mobile({height: "40vh"})}
+  @media only screen and ${device.mobile} {
+    height: 100%;
+  }
 `;
 
 const InfoContainer = styled.div`
   flex: 1;
   padding: 0px 50px;
-  ${mobile({padding: "10px"})}
+  @media only screen and ${device.mobile} {
+    flex: 3;
+    padding: 10px;
+  }
 `;
 
 const Title = styled.h1`
   font-weight: 200;
+  @media only screen and ${device.mobile} {
+    font-size: 20px;
+  }
 `;
 
 const Desc = styled.p`
-  margin: 20px 0px;
+  margin: 10px 0px;
+  @media only screen and ${device.mobile} {
+    font-size: 12px;
+  }
 `;
 
 const Price = styled.span`
   font-weight: 100;
   font-size: 40px;
+  @media only screen and ${device.mobile} {
+    font-size: 30px;
+  }
 `;
 
 const Filter = styled.div`
@@ -79,7 +96,10 @@ const AddContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  ${mobile({width: "100%"})}
+  @media only screen and ${device.mobile} {
+    width: 100%;
+  }
+
 `;
 
 const AmountContainer = styled.div`
@@ -105,12 +125,15 @@ const Button = styled.button`
   background-color: white;
   cursor: pointer;
   font-weight: 500;
+  @media only screen and ${device.mobile} {
+    padding: 10px;
+    font-size: 8px;
+     border: 1px solid teal;
+  }
 
   &:disabled {
     cursor: not-allowed;
-
   }
-
 
   &:hover {
     background-color: #f8f4f4;
@@ -128,7 +151,6 @@ const Product = () => {
             try {
                 const res = await axios.get("/products/find/" + id);
                 setProduct(res.data);
-
                 res.data.color.length !== 0 && setColor(res.data.color[0]);
             } catch {
             }
