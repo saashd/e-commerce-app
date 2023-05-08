@@ -1,4 +1,4 @@
-import {Link, useLocation} from "react-router-dom";
+import { useLocation} from "react-router-dom";
 import Chart from "../../components/admin/Chart";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useMemo, useState} from "react";
@@ -6,7 +6,7 @@ import axios from "axios";
 import PublishIcon from '@mui/icons-material/Publish';
 import styled from "styled-components";
 import Wrapper from "../../components/admin/Wrapper";
-import {addProduct, updateProduct} from "../../redux/apiCalls";
+import {updateProduct} from "../../redux/apiCalls";
 import {Alert, Box, Button, Collapse} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import {device} from "../../responsive";

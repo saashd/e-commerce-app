@@ -3,6 +3,9 @@ import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import LanguageIcon from '@mui/icons-material/Language';
 import SettingsIcon from '@mui/icons-material/Settings';
 import styled from "styled-components";
+import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
+import {logout} from "../../redux/userRedux";
+import {useDispatch} from "react-redux";
 
 
 const Conteiner = styled.div`
@@ -61,6 +64,7 @@ const TopIconBadge = styled.span`
   font-size: 10px;
 `
 const Topbar = () => {
+    const dispatch = useDispatch();
     return (
         <Conteiner>
             <TopbarWrapper>
@@ -79,6 +83,11 @@ const Topbar = () => {
                     <TopbarIconContainer>
                         <SettingsIcon/>
                     </TopbarIconContainer>
+                    <TopbarIconContainer>
+                    <LogoutOutlinedIcon
+                        style={{cursor: "pointer"}} onClick={() => dispatch(logout())}/>
+                    </TopbarIconContainer>
+
                 </TopRight>
             </TopbarWrapper>
         </Conteiner>
