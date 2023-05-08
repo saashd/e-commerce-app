@@ -9,10 +9,12 @@ const authRoute = require("./routes/auth");
 const productRoute = require("./routes/product");
 const stripeRoute = require("./routes/stripe");
 const orderRoute = require("./routes/order")
+const reviewRoute = require("./routes/review")
 const cors = require("cors");
 
+
 mongoose.connect(process.env.MONGO_URL)
-    .then(() => console.log("DB Connection Successfull!"))
+    .then(() => console.log("DB Connection Successful!"))
     .catch((err) => {
         console.log(err);
     });
@@ -24,7 +26,9 @@ app.use("/api/users", userRoute);
 app.use("/api/products", productRoute);
 app.use("/api/checkout", stripeRoute);
 app.use("/api/orders", orderRoute);
+app.use("/api/review",reviewRoute);
 
-app.listen(process.env.PORT || 5000, () => {
-    console.log("Backend server is running!");
+let port = process.env.PORT || 80;
+app.listen(port, () => {
+    console.log("Backend server is running, and listening to port " + port);
 });

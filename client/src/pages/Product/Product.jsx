@@ -11,6 +11,8 @@ import {useParams} from 'react-router-dom'
 import {addProduct} from "../../redux/cartRedux";
 import {useDispatch} from "react-redux";
 import axios from "axios";
+import Reviews from "../../components/Review/Reviews";
+
 
 
 const Container = styled.div``;
@@ -38,6 +40,15 @@ const Image = styled.img`
 `;
 
 const InfoContainer = styled.div`
+  flex: 1;
+  padding: 0px 50px;
+  @media only screen and ${device.mobile} {
+    flex: 3;
+    padding: 10px;
+  }
+`;
+
+const ReviewsContainer= styled.div`
   flex: 1;
   padding: 0px 50px;
   @media only screen and ${device.mobile} {
@@ -203,7 +214,12 @@ const Product = () => {
                             TO CART</Button>
                     </AddContainer>
                 </InfoContainer>
+
+
             </Wrapper>
+            <ReviewsContainer>
+                       <Reviews productId={id}/>
+                </ReviewsContainer>
             <Newsletter/>
             <Footer/>
         </Container>
