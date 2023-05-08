@@ -1,35 +1,93 @@
 import {Rating, TextField} from "@mui/material";
-import {useState} from "react";
+import React, {useState} from "react";
 import isEmail from 'validator/lib/isEmail';
 import axios from "axios";
 import Card from '@mui/material/Card';
 import styled from "styled-components";
 import {device} from "../../responsive";
 import HelpfulReview from "./HelpfulReview";
+import NotificationDisplay from "../NotificationDisplay";
 
 const Button = styled.button`
-  margin: 50px;
-  padding: 15px;
-  border: 2px solid teal;
-  background-color: white;
-  cursor: pointer;
+  padding: 12px 10px;
+  border-radius: 4px;
+  border: 1px solid #018080;
+  background-color: #018080;
+  color: #fff;
+  font-size: 16px;
   font-weight: 500;
-  @media only screen and ${device.mobile} {
-    padding: 10px;
-    font-size: 8px;
-    border: 1px solid teal;
-  }
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
 
   &:disabled {
     cursor: not-allowed;
+    opacity: 0.5;
   }
 
-  &:hover {
-    background-color: #f8f4f4;
+  &:hover:not(:disabled) {
+    background-color: #fff;
+    color: #018080;
+  }
+
+  @media only screen and ${device.mobile} {
+    padding: 10px 15px;
+    font-size: 14px;
   }
 `;
-const ReviewForm = ({readOnly, reviewObj, productId, updateReviews}) => {
+
+const CardContainer = styled(Card)`
+  padding: ${({readOnly}) => readOnly ? "1% 5% 0 5%" : "0 10% 0 10%"};
+
+  &:not(:last-child) {
+    margin-bottom: 30px;
+  }
+
+`;
+
+const Form = styled.form`
+  display: grid;
+  row-gap: 20px;
+    margin:5%;
+
+  @media only screen and ${device.mobile} {
+    row-gap: 10px;
+  }
+`;
+
+const InputWrapper = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+  row-gap: 10px;
+`;
+
+const DateWrapper = styled.span`
+  display: flex;
+  justify-content: flex-start;
+  font-size: 12px;
+  color: #6b6b6b
+  `;
+
+const WhiteBorderTextField = styled(TextField)`
+  .MuiInputLabel-root {
+  color: grey !important;
+}
+  /* focused */
+  .MuiInput-underline:after {
+    border-bottom: 2px solid grey;
+  }
+  overflow: auto;
+`;
+
+const ReviewForm = ({
+                        readOnly,
+                        reviewObj = {rating: 0, name: "", email: "", description: ""},
+                        productId,
+                        updateReviews
+                    }) => {
     const [review, setReview] = useState(reviewObj);
+    const [message, setMessage] = useState(null);
+    const [messageType, setMessageType] = useState(null);
+
     const submitForm = async (e) => {
         e.preventDefault()
         if (isEmail(review.email)) {
@@ -39,28 +97,33 @@ const ReviewForm = ({readOnly, reviewObj, productId, updateReviews}) => {
 
                 if (res.status === 200) {
                     updateReviews(res.data)
-                    setReview({})
-                    alert("Thanks you for the review")
+                    setReview({rating: 0, name: "", email: "", description: ""})
+                    setMessage("Thanks you for the review");
+                    setMessageType("success");
                 } else {
-                    alert("Something went wrong, please try again later.")
+                    setMessage("Something went wrong, please try again later.");
+                    setMessageType("error");
                 }
             } catch (error) {
-                alert("Something went wrong, please try again later.\n" + error.message)
+                setMessage("Something went wrong, please try again later.\n" + error.message);
+                setMessageType("error");
             }
         } else {
-            alert("Not a valid email")
+            setMessage("Not a valid email");
+            setMessageType("warning");
         }
     }
 
 
     return (
-        <Card style={{
-            margin: "5%",
-            padding: "1%",
-            alignContent: "center",
-            backgroundColor: readOnly ? "#01808017" : "white"
-        }}>
-            <form onSubmit={submitForm} style={{display: "grid", margin: "5%"}}>
+
+        <CardContainer readOnly={readOnly} style={{backgroundColor: readOnly ? "#01808017" : "white"}}>
+            {message && messageType && (
+                <NotificationDisplay message={message} messageType={messageType}/>
+            )}
+            {review.createdAt &&
+                <DateWrapper>{new Date(review.createdAt).toDateString()}</DateWrapper>}
+            <Form onSubmit={submitForm}>
                 <Rating
                     readOnly={readOnly}
                     value={review.rating ?? 0}
@@ -68,53 +131,53 @@ const ReviewForm = ({readOnly, reviewObj, productId, updateReviews}) => {
                         setReview({...review, rating: newValue})
                     }}
                 />
-                <div style={{display: "grid"}}>
-                    <TextField required label="Name" variant="standard" value={review.name ?? ""}
+                <InputWrapper>
+                    <WhiteBorderTextField required label={readOnly ? null : "Name"}  variant="standard" value={review.name ?? ""}
                                InputProps={{
                                    readOnly: readOnly,
-                                   disableUnderline: readOnly
+                                   disableUnderline: readOnly,
+                                   style: {
+                                       fontSize:readOnly? 'x-large':"unset",
+                                   },
                                }}
                                onChange={(event) => {
                                    setReview({...review, name: event.target.value})
                                }}/>
-                    <TextField required label="Email" variant="standard" value={review.email ?? ""}
-                               InputProps={{
-                                   readOnly: readOnly,
-                                   disableUnderline: readOnly
-                               }}
-                               onChange={(event) => {
-                                   setReview({...review, email: event.target.value})
-                               }}/>
-                    <TextField
+                    {!readOnly && <WhiteBorderTextField required label={readOnly ? null : "Email"}  variant="standard" value={review.email ?? ""}
+
+                                             InputProps={{
+                                                 readOnly: readOnly,
+                                                 disableUnderline: readOnly
+                                             }}
+                                             onChange={(event) => {
+                                                 setReview({...review, email: event.target.value})
+                                             }}/>}
+                    <WhiteBorderTextField
                         InputProps={{
                             readOnly: readOnly,
                             disableUnderline: readOnly
                         }}
 
                         required
-                        label="Review Description"
+                        label={readOnly ? null : "Description"}
+
                         multiline
                         rows={4}
-                        defaultValue="Default Value"
                         variant="standard"
                         value={review.description ?? ""}
 
                         onChange={(event) => {
                             setReview({...review, description: event.target.value})
                         }}
-                    /></div>
+                    /></InputWrapper>
                 {!readOnly && <Button disabled={readOnly} type={"submit"}> Submit</Button>}
 
 
-            </form>
+            </Form>
 
             {readOnly && <HelpfulReview review={review} setReview={setReview}/>}
-            {review.createdAt &&
-                <span style={{
-                    display: "flex",
-                    justifyContent: "flex-end"
-                }}>{new Date(review.createdAt).toDateString()}</span>}
-        </Card>
+
+        </CardContainer>
     );
 }
 
